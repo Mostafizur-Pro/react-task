@@ -13,12 +13,26 @@ const Problem2 = () => {
 
   const [show, setShow] = useState(false);
   const [shows, setShows] = useState(false);
+  const [show2, setShow2] = useState(false);
+
+  const [details, setDetails] = useState({});
+
+  console.log(details)
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const handleClose1 = () => setShows(false);
   const handleShow1 = () => setShows(true);
+
+  const handleClose2 = () => setShow2(false);
+
+  const handleShow2 = (data) =>{
+    setDetails(data)
+    setShow(false)
+    setShows(false)
+    setShow2(true)
+  };
 
   const handleModalA = () => {
     setShow(true);
@@ -87,8 +101,8 @@ const Problem2 = () => {
                 {contacts.results?.map((d, i) => (
                   <>
                     <tr key={i}>
-                      <td>{d.country.name}</td>
-                      <td>{d.phone}</td>
+                      <td  onClick={()=>handleShow2(d)} >{d.country.name}</td>
+                      <td onClick={()=>handleShow2(d)}>{d.phone}</td>
                     </tr>
                   </>
                 ))}
@@ -134,10 +148,39 @@ const Problem2 = () => {
                   ?.filter((d) => d.country.name === "United States")
                   .map((filteredContact, i) => (
                     <tr key={i}>
-                      <td>{filteredContact.country.name}</td>
-                      <td>{filteredContact.phone}</td>
+                      <td onClick={()=>handleShow2(filteredContact)} >{filteredContact.country.name}</td>
+                      <td onClick={()=>handleShow2(filteredContact)}>{filteredContact.phone}</td>
                     </tr>
                   ))}
+              </tbody>
+            </table>
+          </Modal.Footer>
+        </Modal>
+
+
+
+             {/* US Contacts */}
+             <Modal show={show2}  onHide={handleClose2}>
+          <Modal.Header closeButton>
+            <Modal.Title>{details.country.name}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+           
+
+
+          </Modal.Body>
+          <Modal.Footer>
+       
+            <table className="table table-striped ">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Number</th>
+                </tr>
+              </thead>
+              <tbody>
+              <td scope="col">{details.country.name}</td>
+                  <td scope="col">{details.phone}</td>
               </tbody>
             </table>
           </Modal.Footer>
